@@ -5,11 +5,6 @@ jobs:
     name: build and push image
     runs-on: ubuntu-latest
     steps:
-		- name: checkout repo gha2
-			uses: actions/checkout@master
-			with:
-				repository: dcampostest/prueba-gha2
-				token: ${{ secrets.ACCESS_TOKEN }}
     - uses: actions/checkout@master
     - name: build and push to docker
       uses: docker/build-push-action@v2
@@ -20,3 +15,8 @@ jobs:
         tag_with_ref: true
         tag_with_sha: true
         tags: ${{ github.sha }}
+		- name: Run multi repo cloning script
+        env: 
+            PA_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        run: ".github/clone_repos.sh"
+        shell: git clone "https://"$ACCESS_TOKEN"@github.com/dcampostest/prueba-gha2.git"
