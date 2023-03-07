@@ -5,7 +5,8 @@ jobs:
     name: build and push image
     runs-on: ubuntu-latest
     steps:
-		- uses: actions/checkout@v1  
+		- name: checkout repo gha2
+			uses: actions/checkout@master
 			with:
 				repository: dcampostest/prueba-gha2
 				token: ${{ secrets.ACCESS_TOKEN }}
