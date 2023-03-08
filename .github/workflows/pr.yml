@@ -29,12 +29,12 @@ jobs:
         run: |
           python3 main.py
       - name: git
-      run: |
-        # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
-        git --version
-        # git config user.name "GitHub Actions Bot"
-        # git config user.email "<>"
-        git status
-        # git tag
-        # git describe
-        git branch
+        run: |
+          # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+          git --version
+          # git config user.name "GitHub Actions Bot"
+          # git config user.email "<>"
+          git status
+          # git tag
+          # git describe
+          git branch
