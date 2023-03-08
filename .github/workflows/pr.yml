@@ -1,5 +1,4 @@
 on:
-  name: pull_request
   pull_request:
     types:
       - opened
