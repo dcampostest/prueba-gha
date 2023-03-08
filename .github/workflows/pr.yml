@@ -1,10 +1,10 @@
-name: Check PRs
 on:
   pull_request:
-    branches:
-      - main
+    types:
+      - opened
 jobs:
-  build:
-  steps:
-    - name: Run tests
-      run: echo running tests
+  run_if:
+    if:  startsWith(github.head_ref, 'migration/')
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The head of this PR starts with 'migration/'"
