@@ -6,5 +6,5 @@ on:
 jobs:
   build:
   steps:
-      - name: Run tests
-        run: echo running tests
+    - name: Run tests
+      run: echo running tests
