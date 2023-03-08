@@ -2,7 +2,7 @@ name: Migration run on Churrera
 on:
   pull_request:
     types:
-      - [opened, synchronize]
+      - opened
 jobs:
   run_if:
     if:  startsWith(github.head_ref, 'migration/')
