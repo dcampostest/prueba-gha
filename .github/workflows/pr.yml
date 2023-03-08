@@ -1,12 +1,10 @@
-name: Check PR
-
+name: Check PRs
 on:
   pull_request:
     branches:
       - main
-
 jobs:
   build:
   steps:
       - name: Run tests
-        run: echo running s
+        run: echo running tests
