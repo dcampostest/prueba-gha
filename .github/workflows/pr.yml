@@ -1,3 +1,4 @@
+name: Migration run on Churrera
 on:
   pull_request:
     types:
@@ -28,13 +29,11 @@ jobs:
       - name: Test Run script
         run: |
           python3 main.py
-      - name: git
+      
+      - name: Install git 
         run: |
-          # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+          apt-get install -y git
           git --version
-          # git config user.name "GitHub Actions Bot"
-          # git config user.email "<>"
-          git status
-          # git tag
-          # git describe
-          git branch
+          echo "Path is ... $PATH"
+          PATH=$PATH:$(which git)
+          echo "Path is ... $PATH"
