@@ -2,7 +2,7 @@ name: Migration run on Churrera
 on:
   pull_request:
     types:
-      - opened
+      - [opened, edited]
 jobs:
   run_if:
     if:  startsWith(github.head_ref, 'migration/')
@@ -32,9 +32,15 @@ jobs:
         run: |
           python3 main.py
       
-      - name: Check for uncommitted changes
-        id: check-changes
-        uses: mskri/check-uncommitted-changes-action@v1.0.1
-      - name: Print uncommitted changes
-        if: steps.check-changes.outputs.changes != ''
-        run: echo "There are uncommitted changes"
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '1.16'
+      - uses: bufbuild/buf-setup-action@v0.1.0
+        with:
+          version: '0.43.2'
+      - name: Generating gRPC files
+        run: make generate
+      - uses: setare/git-changes-action@v0.1.2
+        with:
+          github_token: ${{ github.token }}
+          name: 'File generation check'
