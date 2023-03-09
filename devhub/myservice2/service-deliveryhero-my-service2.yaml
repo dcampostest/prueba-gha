@@ -1,0 +1,23 @@
+kind: service
+name: my-service2
+namespace: deliveryhero
+spec:
+    application: backendapp:deliveryhero/myservice2
+    dependsOn: []
+    description: My test service
+    docs: []
+    lifecycle:
+        launchDate: '2023-05-01T00:00:00Z'
+        status: beta
+    links:
+    -   icon: github
+        name: github
+        target: deliveryhero/my-service2
+        title: GitHub
+        type: github/repo
+    owner: group:deliveryhero/devex
+    sources:
+    - github/repo:github
+    tier: 4
+    title: Test Service 2
+    visibility: internal
