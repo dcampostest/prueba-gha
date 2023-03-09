@@ -42,15 +42,16 @@ jobs:
             add: '*.txt --force'
             # cwd: './migration/'
   job2:
+    runs-on: ubuntu-latest
     needs: job1
-      steps:
-        - run: pwd
-        - run: ls -la
-        - name: Commit changes
-          uses: EndBug/add-and-commit@v9
-          with:
-            author_name: Darian Campos
-            author_email: darian.campos@pedidosya.com
-            message: 'Migration success'
-            add: '*.txt --force'
-            # cwd: './migration/'
+    steps:
+      - run: pwd
+      - run: ls -la
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: Darian Campos
+          author_email: darian.campos@pedidosya.com
+          message: 'Migration success'
+          add: '*.txt --force'
+          # cwd: './migration/'
