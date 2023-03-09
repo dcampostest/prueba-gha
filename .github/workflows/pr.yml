@@ -30,15 +30,10 @@ jobs:
       - name: Test Run script
         run: |
           python3 main.py
-      
-      - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.head_ref }}
-      - name: Make uncommitted changes by creating empty file
-        run: touch uncommitted.tmp
+      s
       - name: Check for uncommitted changes
         id: check-changes
         uses: mskri/check-uncommitted-changes-action@v1.0.1
-      - name: Evaluate if there are changes
+      - name: s
         if: steps.check-changes.outputs.outcome == failure()
         run: echo "There are uncommitted changes"
