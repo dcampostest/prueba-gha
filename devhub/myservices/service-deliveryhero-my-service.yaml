@@ -16,36 +16,8 @@ spec:
         title: GitHub
         type: github/repo
     owner: group:deliveryhero/devex
-    sources: !!python/object/apply:numpy.core.multiarray._reconstruct
-        args:
-        - !!python/name:numpy.ndarray ''
-        - !!python/tuple
-            - 0
-        - !!binary |
-            Yg==
-        state: !!python/tuple
-        - 1
-        - !!python/tuple
-            - 1
-        - !!python/object/apply:numpy.dtype
-            args:
-            - U32
-            - false
-            - true
-            state: !!python/tuple
-            - 3
-            - <
-            - null
-            - null
-            - null
-            - 128
-            - 4
-            - 8
-        - false
-        - !!binary |
-            ZwAAAGkAAAB0AAAAaAAAAHUAAABiAAAALwAAAHIAAABlAAAAcAAAAG8AAAA6AAAAZwAAAGkAAAB0
-            AAAAaAAAAHUAAABiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAA=
-    tier: 2
+    sources:
+    - github/repo:github
+    tier: 1
     title: Test Service
     visibility: internal
