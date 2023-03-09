@@ -32,3 +32,11 @@ jobs:
           python3 main.py
       - run: pwd
       - run: ls -la
+      - name: Commit changes
+      uses: EndBug/add-and-commit@v9
+      with:
+        author_name: Darian Campos
+        author_email: darian.campos@pedidosya.com
+        message: 'Migration success'
+        add: '*.txt --force'
+        cwd: './migration/'
