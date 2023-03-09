@@ -33,8 +33,8 @@ jobs:
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
-          with:
-            author_name: Darian Campos
-            author_email: darian.campos@pedidosya.com
-            message: 'Migration success'
-            add: '*.txt'
+        with:
+          author_name: Darian Campos
+          author_email: darian.campos@pedidosya.com
+          message: 'Migration success'
+          add: '*.txt'
