@@ -30,7 +30,7 @@ jobs:
       - name: Test Run script
         run: |
           python3 main.py
-      s
+          
       - name: Check for uncommitted changes
         id: check-changes
         uses: mskri/check-uncommitted-changes-action@v1.0.1
