@@ -39,4 +39,4 @@ jobs:
           author_email: darian.campos@pedidosya.com
           message: 'Migration success'
           add: '*.txt --force'
-          cwd: './migration/'
+          # cwd: './migration/'

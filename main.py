@@ -11,7 +11,7 @@ print("Current date & time : ", current_datetime)
 str_current_datetime = str(current_datetime)
   
 # create a file object along with extension
-file_name = "migration/"+str_current_datetime+".txt"
+file_name = str_current_datetime+".txt"
 file = open(file_name, 'w')
   
 print("File created : ", file.name)
