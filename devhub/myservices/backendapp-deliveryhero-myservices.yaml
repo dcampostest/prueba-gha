@@ -1,0 +1,15 @@
+kind: backendapp
+name: myservices
+namespace: deliveryhero
+spec:
+    cd: []
+    description: ''
+    docs: []
+    lifecycle:
+        launchDate: '2023-05-01T00:00:00Z'
+        status: beta
+    links: []
+    owner: group:deliveryhero/devex
+    tier: 1
+    title: myservices
+    visibility: internal
