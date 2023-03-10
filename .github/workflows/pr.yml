@@ -1,5 +1,8 @@
 name: Migration Churrera
 
+env:
+  DEVHUB_BASE_URL: https://dev-hub-0008-api.dev.core-services.developer-platform.io
+
 on:
   pull_request:
     types: [opened, synchronize, ready_for_review]
@@ -61,7 +64,7 @@ jobs:
           message: 'Migration success'
           add: 'devhub/ --force'
       - name: Fetch Migration Files
-        id: pathlister
+        id: lister
         uses: Rishabh510/Path-lister-action@master
         with:
           path: "devhub"
@@ -69,7 +72,8 @@ jobs:
 
       - name: Output results
         run: |
-          echo "Found ${{ steps.pathlister.outputs.path_count }} file(s) with this extension:"
-          for i in ${{ steps.pathlister.outputs.paths }}; do
-            echo "Should Run cli on input $i and output on ${i/devhub\//cli\/} and error on ${i/\.yaml/.error.json}"
+          echo "Found ${{ steps.lister.outputs.path_count }} file(s) with this extension:"
+          for i in ${{ steps.lister.outputs.paths }}; do
+            pyhton dh-devhub-migrator/cli/ultron.py save -i $i -eo ${i/\.yaml/.error.json} -dr
+            echo "If need to be generated the output use arg -o ${i/devhub\//cli\/} on CLI (ultron) command"
           done
