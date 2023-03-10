@@ -56,21 +56,13 @@ jobs:
       - name: Run Migration Tool
         run: |
           python3 dh-devhub-migrator/extract_entities.py  --SOURCE_DIR sdbmigration --OUTPUT_DIR devhub
-      - name: Commit changes
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: Darian Campos
-          author_email: darian.campos@pedidosya.com
-          message: 'Migration success'
-          add: 'devhub/ --force'
       - name: Fetch Migration Files
         id: lister
         uses: Rishabh510/Path-lister-action@master
         with:
           path: "devhub"
           type: ".yaml"
-
-      - name: Output results
+      - name: Devhub CLI save command
         run: |
           echo "Found ${{ steps.lister.outputs.path_count }} file(s) with this extension:"
           for i in ${{ steps.lister.outputs.paths }}; do
@@ -79,3 +71,10 @@ jobs:
             echo "If you need to generate the output as a new file use arg -o ${i/devhub\//cli\/} on CLI (ultron) command"
             echo "---------------------> End Processing File $i"
           done
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: Darian Campos
+          author_email: darian.campos@pedidosya.com
+          message: 'Migration success'
+          add: 'devhub/ --force'
