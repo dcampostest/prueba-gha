@@ -71,5 +71,5 @@ jobs:
         run: |
           echo "Found ${{ steps.pathlister.outputs.path_count }} file(s) with this extension:"
           for i in ${{ steps.pathlister.outputs.paths }}; do
-            echo "Should Run CLI with dryrun on file ${{$i}}"
+            echo "Should Run CLI with dryrun on file ${{i}}"
           done
