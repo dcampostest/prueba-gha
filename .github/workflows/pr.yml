@@ -71,5 +71,5 @@ jobs:
         run: |
           echo "Found ${{ steps.pathlister.outputs.path_count }} file(s) with this extension:"
           for i in ${{ steps.pathlister.outputs.paths }}; do
-            echo "Should Run cli on input $i and output on ${i/devhub\//cli\/}"
+            echo "Should Run cli on input $i and output on ${i/devhub\//cli\/} and error on ${i/\.yaml/.error.json}"
           done
