@@ -24,35 +24,35 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
-      - name: Clone Python Repository
+      - name: Clone Python Migration Repository
         uses: actions/checkout@v3
         with:
           repository: deliveryhero/dh-devhub-migrator
           path: dh-devhub-migrator
           token: ${{ secrets.ACCESS_TOKEN }}
           ref: testCli
-      - name: Set up Python 3.10
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
-      - name: Install dependencies
+      - name: Install Python Dependencies
         run: |
           cd dh-devhub-migrator
           python -m pip install --upgrade pip
           pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Lint with flake8
+      - name: Lint Python with flake8
         run: |
           cd dh-devhub-migrator
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      - name: Test Run script
+      - name: Run Migration Tool
         run: |
-          cd dh-devhub-migrator
-          python3 extract_entities.py  --SOURCE_DIR ../sdbmigration --OUTPUT_DIR ../devhub
+          python3 dh-devhub-migrator/extract_entities.py  --SOURCE_DIR sdbmigration --OUTPUT_DIR devhub
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
@@ -60,3 +60,16 @@ jobs:
           author_email: darian.campos@pedidosya.com
           message: 'Migration success'
           add: 'devhub/ --force'
+      - name: Fetch Migration Files
+        id: pathlister
+        uses: Rishabh510/Path-lister-action@master
+        with:
+          path: "devhub"
+          type: ".yaml,yml"
+
+      - name: Output results
+        run: |
+          echo "Found ${{ steps.pathlister.outputs.path_count }} file(s) with this extension:"
+          for i in ${{ steps.pathlister.outputs.paths }}; do
+            echo "Should Run CLI with dryrun on file ${{$i}}"
+          done
