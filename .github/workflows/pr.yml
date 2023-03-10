@@ -65,7 +65,7 @@ jobs:
         uses: Rishabh510/Path-lister-action@master
         with:
           path: "devhub"
-          type: ".yaml,yml"
+          type: ".yaml"
 
       - name: Output results
         run: |
