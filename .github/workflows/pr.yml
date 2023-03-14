@@ -1,4 +1,7 @@
-name: Migration Churrera
+name: Devhub Migration
+
+env:
+  DEVHUB_BASE_URL: https://dev-hub-0008-api.dev.core-services.developer-platform.io
 
 on:
   pull_request:
@@ -20,39 +23,81 @@ on:
 
 jobs:
   translate:
-    name: Migrations files
+    name: DevHub Migration
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
-      - name: Clone Python Repository
+      - name: Checkout Python Migration Scripts Repository
         uses: actions/checkout@v3
         with:
           repository: deliveryhero/dh-devhub-migrator
           path: dh-devhub-migrator
           token: ${{ secrets.ACCESS_TOKEN }}
-          ref: testCli
-      - name: Set up Python 3.10
+          ref: main
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
-      - name: Install dependencies
+      - name: Install Python Dependencies And Requirements
         run: |
           cd dh-devhub-migrator
           python -m pip install --upgrade pip
           pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Lint with flake8
+      - name: Lint Python Files with flake8
         run: |
           cd dh-devhub-migrator
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      - name: Test Run script
+      - name: Run Migration Tool
         run: |
-          cd dh-devhub-migrator
-          python3 extract_entities.py  --SOURCE_DIR ../sdbmigration --OUTPUT_DIR ../devhub
+          python dh-devhub-migrator/extract_entities.py  --SOURCE_DIR sdbmigration --OUTPUT_DIR devhub
+      - name: Get Generated Migration Files
+        id: lister
+        uses: Rishabh510/Path-lister-action@master
+        with:
+          path: "devhub"
+          type: ".yaml"
+      - name: Run Devhub CLI Save Command
+        run: |
+          echo "Found ${{ steps.lister.outputs.path_count }} file(s) with this extension:"
+          echo "To generate the file output use arg -o ${i/devhub\//cli\/} on CLI (devhub_cli) command"
+          for i in ${{ steps.lister.outputs.paths }}; do
+            echo "---------------------> Start Processing File: $i"
+            python dh-devhub-migrator/cli/devhub_cli.py save -i $i -eo ${i/\.yaml/.error.json} -dr
+            echo "---------------------> End Processing File $i"
+          done
+      - name: Get changed yaml files in the devhub folder
+        id: changed-entities
+        uses: tj-actions/changed-files@v35
+        with:
+          files: devhub/**/*.{yaml,yml}
+      - name: Run step if any file(s) in the devhub folder change
+        id: validation
+        run: |
+          echo "IS_VALID=true" >> $GITHUB_OUTPUT
+          for f in ${{ steps.changed-entities.outputs.all_changed_files }}; do
+            echo "---------------------> Start Validation of File: $f"
+            if test -f ${f/\.yaml/.error.json}; then
+                echo "IS_VALID=false" >> $GITHUB_OUTPUT
+                break
+            fi
+            echo "---------------------> End Validation of File $f"
+          done
+      - name: Add Validation Labels
+        uses: actions-ecosystem/action-add-labels@v1
+        if: ${{ steps.validation.outputs.IS_VALID == 'false' }}
+        with:
+          labels: devhub-error
+      - name: Remove Validation Labels
+        uses: actions-ecosystem/action-remove-labels@v1
+        if: ${{ steps.validation.outputs.IS_VALID == 'true' }}
+        with:
+          labels: devhub-error
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
@@ -60,3 +105,6 @@ jobs:
           author_email: darian.campos@pedidosya.com
           message: 'Migration success'
           add: 'devhub/ --force'
+      - name: Fail Checks
+        if: ${{ steps.validation.outputs.IS_VALID == 'false' }}
+        run: exit 1
