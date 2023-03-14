@@ -1,10 +1,9 @@
 name: automerge
 on:
-  check_run:
-    types: [completed]
-  check_suite:
-    types: [completed]
-  status: {}
+  workflow_run:
+    workflows: ["Migrations files"]
+    types: 
+      - completed
 jobs:
   automerge:
     runs-on: ubuntu-latest
