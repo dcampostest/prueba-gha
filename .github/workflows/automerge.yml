@@ -1,28 +1,16 @@
 name: automerge
 on:
-  pull_request:
-    types:
-      - labeled
-      - unlabeled
-      - synchronize
-      - opened
-      - edited
-      - ready_for_review
-      - reopened
-      - unlocked
-  pull_request_review:
-    types:
-      - submitted
-  check_suite:
-    types:
+  workflow_run:
+    workflows: ["Migration Churrera"]
+    types: 
       - completed
-  status: {}
 jobs:
   automerge:
+    needs: pr
     runs-on: ubuntu-latest
     steps:
       - name: checkout catalog
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
         with:
           path: devhub
       - name: Get changed files in the docs folder
