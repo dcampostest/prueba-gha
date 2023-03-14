@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout catalog
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
         with:
           path: devhub
       - name: Get changed files in the docs folder

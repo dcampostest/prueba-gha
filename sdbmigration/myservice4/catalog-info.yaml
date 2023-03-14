@@ -3,17 +3,17 @@ kind: Component
 metadata: 
   name: my-service4
   namespace: deliveryhero
-  title: Test Service
+  title: Test Service 4
   links: 
     - url: https://github.com/deliveryhero/my-service
       title: GitHub
       icon: github 
-  description: My test service 4
+  description: My test service 4 new test
 spec:
   type: service
   owner: deliveryhero/devex
   lifecycle: beta
   dependsOn: []
   dh: 
-    tier: 4
+    tier: 1
     launchDate: May 2023 
