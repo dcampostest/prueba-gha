@@ -40,7 +40,7 @@ jobs:
           curl -H "Authorization: token $secrets.ACCESS_TOKEN" https://raw.githubusercontent.com/deliveryhero/dh-devhub-migrator/main/dist/devhub_migration --output tools/devhub_migration
       - name: Run Migration Tool
         run: |
-          git update-index --chmod=+x ./tools/devhub_migration
+          chmod +x ./tools/devhub_migration
           ./tools/devhub_migration  --SOURCE_DIR $DEVHUB_MIGRATION_SOURCE_DIR --OUTPUT_DIR $DEVHUB_OUTPUT_DIR
       - name: Get Generated Yaml Files
         id: lister
@@ -50,7 +50,7 @@ jobs:
           type: ".yaml"
       - name: Run Devhub CLI Save
         run: |
-          git update-index --chmod=+x ./tools/devhub_cli
+          chmod +x ./tools/devhub_cli
           echo "Found ${{ steps.lister.outputs.path_count }} file(s) with this extension:"
           echo "To generate the file output use arg -o ${i/devhub\//cli\/} on CLI (devhub_cli) command"
           for i in ${{ steps.lister.outputs.paths }}; do
