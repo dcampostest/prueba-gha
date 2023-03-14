@@ -84,12 +84,18 @@ jobs:
             echo "---------------------> Start Validation of File: $f"
             if test -f ${f/\.yaml/.error.json}; then
                 echo "IS_VALID=false" >> $GITHUB_OUTPUT
+                break
             fi
             echo "---------------------> End Validation of File $f"
           done
-      - name: Add Validation Label
+      - name: Add Validation Labels
         uses: actions-ecosystem/action-add-labels@v1
         if: ${{ steps.validation.outputs.IS_VALID == 'false' }}
+        with:
+          labels: devhub-error
+      - name: Remove Validation Labels
+        uses: actions-ecosystem/action-remove-labels@v1
+        if: ${{ steps.validation.outputs.IS_VALID == 'true' }}
         with:
           labels: devhub-error
       - name: Commit changes
@@ -99,3 +105,6 @@ jobs:
           author_email: darian.campos@pedidosya.com
           message: 'Migration success'
           add: 'devhub/ --force'
+      - name: Fail Checks
+        if: ${{ steps.validation.outputs.IS_VALID == 'false' }}
+        run: exit 1
