@@ -36,8 +36,8 @@ jobs:
       - name: Get Migration Tools
         run: |
           mkdir tools
-          curl -H "Authorization: token ${secrets.ACCESS_TOKEN}" https://raw.githubusercontent.com/deliveryhero/dh-devhub-migrator/main/dist/devhub_cli --output tools/devhub_cli
-          curl -H "Authorization: token ${secrets.ACCESS_TOKEN}" https://raw.githubusercontent.com/deliveryhero/dh-devhub-migrator/main/dist/devhub_migration --output tools/devhub_migration
+          curl -H "Authorization: token $secrets.ACCESS_TOKEN" https://raw.githubusercontent.com/deliveryhero/dh-devhub-migrator/main/dist/devhub_cli --output tools/devhub_cli
+          curl -H "Authorization: token $secrets.ACCESS_TOKEN" https://raw.githubusercontent.com/deliveryhero/dh-devhub-migrator/main/dist/devhub_migration --output tools/devhub_migration
       - name: Run Migration Tool
         run: ./tools/devhub_migration  --SOURCE_DIR $DEVHUB_MIGRATION_SOURCE_DIR --OUTPUT_DIR DEVHUB_OUTPUT_DIR
       - name: Get Generated Yaml Files
