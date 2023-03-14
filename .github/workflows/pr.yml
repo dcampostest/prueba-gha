@@ -33,18 +33,30 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
-      - name: Get Migration Tools
+      - name: Checkout Migration Tools Repository
+        uses: actions/checkout@v3
+        with:
+          repository: deliveryhero/dh-devhub-migrator
+          path: tools
+          token: ${{ secrets.ACCESS_TOKEN }}
+          ref: main
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - name: Install Python Dependencies And Requirements
         run: |
-          mkdir tools
-          curl -H "Authorization: token $secrets.ACCESS_TOKEN" https://raw.githubusercontent.com/deliveryhero/dh-devhub-migrator/main/dist/devhub_cli --output tools/devhub_cli
-          curl -H "Authorization: token $secrets.ACCESS_TOKEN" https://raw.githubusercontent.com/deliveryhero/dh-devhub-migrator/main/dist/devhub_migration --output tools/devhub_migration
-          ls tools
-          chmod +x tools/devhub_migration
-          chmod +x tools/devhub_cli
+          cd tools
+          python -m pip install --upgrade pip
+          pip install flake8 pytest
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Lint Python Files with flake8
+        run: |
+          cd tools
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Run Migration Tool
-        run: |
-          ls ./tools
-          ./tools/devhub_migration --SOURCE_DIR $DEVHUB_MIGRATION_SOURCE_DIR --OUTPUT_DIR $DEVHUB_OUTPUT_DIR
+        run: python tools/extract_entities.py  --SOURCE_DIR $DEVHUB_MIGRATION_SOURCE_DIR --OUTPUT_DIR $DEVHUB_OUTPUT_DIR 
       - name: Get Generated Yaml Files
         id: lister
         uses: Rishabh510/Path-lister-action@master
@@ -57,8 +69,7 @@ jobs:
           echo "To generate the file output use arg -o ${i/devhub\//cli\/} on CLI (devhub_cli) command"
           for i in ${{ steps.lister.outputs.paths }}; do
             echo "---------------------> Start Processing File: $i"
-            ./tools/devhub_cli save -i $i -eo ${i/\.yaml/.error.json} -dr
-            echo "---------------------> End Processing File $i"
+            python tools/cli/devhub_cli.py save -i $i -eo ${i/\.yaml/.error.json} -dr
           done
       - name: Get Changed Yaml Files
         id: changed-entities
