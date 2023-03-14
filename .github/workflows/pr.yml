@@ -39,12 +39,12 @@ jobs:
           curl -H "Authorization: token ${secrets.ACCESS_TOKEN}" https://raw.githubusercontent.com/deliveryhero/dh-devhub-migrator/main/dist/devhub_cli --output tools/devhub_cli
           curl -H "Authorization: token ${secrets.ACCESS_TOKEN}" https://raw.githubusercontent.com/deliveryhero/dh-devhub-migrator/main/dist/devhub_migration --output tools/devhub_migration
       - name: Run Migration Tool
-        run: ./tools/devhub_migration  --SOURCE_DIR $DEVHUB_MIGRATION_SOURCE_DIR --OUTPUT_DIR $DEVHUB_OUTPUT_DIR
+        run: ./tools/devhub_migration  --SOURCE_DIR ${{DEVHUB_MIGRATION_SOURCE_DIR}} --OUTPUT_DIR ${{DEVHUB_OUTPUT_DIR}}
       - name: Get Generated Yaml Files
         id: lister
         uses: Rishabh510/Path-lister-action@master
         with:
-          path: DEVHUB_OUTPUT_DIR
+          path: ${{DEVHUB_OUTPUT_DIR}}
           type: ".yaml"
       - name: Run Devhub CLI Save
         run: |
