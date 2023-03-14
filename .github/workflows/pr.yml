@@ -44,7 +44,7 @@ jobs:
         id: lister
         uses: Rishabh510/Path-lister-action@master
         with:
-          path: ${{DEVHUB_OUTPUT_DIR}}
+          path: env.DEVHUB_OUTPUT_DIR
           type: ".yaml"
       - name: Run Devhub CLI Save
         run: |
@@ -59,7 +59,7 @@ jobs:
         id: changed-entities
         uses: tj-actions/changed-files@v35
         with:
-          files: ${{DEVHUB_OUTPUT_DIR}}/**/*.{yaml,yml}
+          files: ${{env.DEVHUB_OUTPUT_DIR}}/**/*.{yaml,yml}
       - name: Validate Devhub CLI output
         id: validation
         run: |
