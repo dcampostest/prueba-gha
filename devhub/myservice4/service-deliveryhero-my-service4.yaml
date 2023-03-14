@@ -4,7 +4,7 @@ namespace: deliveryhero
 spec:
     application: backendapp:deliveryhero/myservice4
     dependsOn: []
-    description: My test service 4
+    description: My test service 4 new test
     docs: []
     lifecycle:
         launchDate: '2023-05-01T00:00:00Z'
@@ -18,6 +18,6 @@ spec:
     owner: group:deliveryhero/devex
     sources:
     - github/repo:github
-    tier: 4
-    title: Test Service
+    tier: 1
+    title: Test Service 4
     visibility: internal
