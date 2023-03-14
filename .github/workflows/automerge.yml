@@ -6,6 +6,7 @@ on:
       - completed
 jobs:
   automerge:
+    needs: pr
     runs-on: ubuntu-latest
     steps:
       - name: checkout catalog
