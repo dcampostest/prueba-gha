@@ -75,7 +75,7 @@ jobs:
         id: changed-entities
         uses: tj-actions/changed-files@v35
         with:
-          files: devhub/*.{yaml,yml}
+          files: devhub/**/*.{yaml,yml}
       - name: Run step if any file(s) in the devhub folder change
         id: validation
         run: |
