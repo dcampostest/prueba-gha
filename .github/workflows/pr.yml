@@ -44,7 +44,7 @@ jobs:
       - name: Run Migration Tool
         run: |
           ls ./tools
-          ./tools/devhub_migration  --SOURCE_DIR $DEVHUB_MIGRATION_SOURCE_DIR --OUTPUT_DIR $DEVHUB_OUTPUT_DIR
+          ./tools/devhub_migration --SOURCE_DIR $DEVHUB_MIGRATION_SOURCE_DIR --OUTPUT_DIR $DEVHUB_OUTPUT_DIR
       - name: Get Generated Yaml Files
         id: lister
         uses: Rishabh510/Path-lister-action@master
