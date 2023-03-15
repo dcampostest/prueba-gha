@@ -1,4 +1,4 @@
-name: Devhub Migration
+name: Devhub Migration Check
 
 env:
   DEVHUB_BASE_URL: https://dev-hub-0008-api.dev.core-services.developer-platform.io
