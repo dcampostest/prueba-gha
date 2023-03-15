@@ -4,8 +4,9 @@ env:
   DEVHUB_BASE_URL: https://dev-hub-0008-api.dev.core-services.developer-platform.io
 
 on:
-  pull_request:
-    types: [merged]
+  push:
+    branches:
+      - main
     paths:
       - "catalog-info.yaml"
       - "backstage/**/*.yaml"
