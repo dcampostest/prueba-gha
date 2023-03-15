@@ -36,12 +36,14 @@ jobs:
       - name: Get Migration Tools
         run: |
           mkdir tools
-          curl -H "Authorization: token $secrets.ACCESS_TOKEN" https://raw.githubusercontent.com/deliveryhero/dh-devhub-migrator/main/dist/debhub_cli_linux --output tools/debhub_cli
-          curl -H "Authorization: token $secrets.ACCESS_TOKEN" https://raw.githubusercontent.com/deliveryhero/dh-devhub-migrator/main/dist/debhub_migration_linux --output tools/debhub_migration
-          chmod +x tools/debhub_cli
-          chmod +x tools/debhub_migration
+          curl -H "Authorization: token $secrets.ACCESS_TOKEN" https://raw.githubusercontent.com/deliveryhero/dh-devhub-migrator/main/dist/debhub_cli_linux --output tools/devhub_cli
+          curl -H "Authorization: token $secrets.ACCESS_TOKEN" https://raw.githubusercontent.com/deliveryhero/dh-devhub-migrator/main/dist/debhub_migration_linux --output tools/devhub_migration
+          chmod +x tools/devhub_cli
+          chmod +x tools/devhub_migration
       - name: Run Migration Tool
-        run: ./tools/debhub_migration --SOURCE_DIR $DEVHUB_MIGRATION_SOURCE_DIR --OUTPUT_DIR $DEVHUB_OUTPUT_DIR 
+        run: |
+          cd tools
+          .devhub_migration --SOURCE_DIR ../$DEVHUB_MIGRATION_SOURCE_DIR --OUTPUT_DIR ../$DEVHUB_OUTPUT_DIR 
       - name: Get Generated Yaml Files
         id: lister
         uses: Rishabh510/Path-lister-action@master
@@ -50,11 +52,12 @@ jobs:
           type: ".yaml"
       - name: Run Devhub CLI Save
         run: |
+          cd tools
           echo "Found ${{ steps.lister.outputs.path_count }} file(s) with this extension:"
           echo "To generate the file output use arg -o ${i/devhub\//cli\/} on CLI (devhub_cli) command"
           for i in ${{ steps.lister.outputs.paths }}; do
             echo "---------------------> Start Processing File: $i"
-            ./tools/debhub_cli save -i $i -eo ${i/\.yaml/.error.json} -dr
+            ./devhub_cli save -i ../$i -eo ../${i/\.yaml/.error.json} -dr
           done
       - name: Get Changed Yaml Files
         id: changed-entities
