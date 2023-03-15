@@ -6,16 +6,6 @@ env:
 on:
   pull_request:
     types: [closed]
-    paths:
-      - "catalog-info.yaml"
-      - "backstage/**/*.yaml"
-      - "backstage/**/*.yml"
-      - "backstage/**/*.*.yaml"
-      - "backstage/**/*.*.yml"
-      - "sdbmigration/**/*.yaml"
-      - "sdbmigration/**/*.yml"
-      - "sdbmigration/**/*.*.yaml"
-      - "sdbmigration/**/*.*.yml"
     branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
