@@ -38,6 +38,8 @@ jobs:
           mkdir tools
           curl -H "Authorization: token $secrets.ACCESS_TOKEN" https://raw.githubusercontent.com/deliveryhero/dh-devhub-migrator/main/dist/debhub_cli_linux --output tools/debhub_cli
           curl -H "Authorization: token $secrets.ACCESS_TOKEN" https://raw.githubusercontent.com/deliveryhero/dh-devhub-migrator/main/dist/debhub_migration_linux --output tools/debhub_migration
+          chmod +x tools/debhub_cli
+          chmod +x tools/debhub_migration
       - name: Run Migration Tool
         run: ./tools/debhub_migration --SOURCE_DIR $DEVHUB_MIGRATION_SOURCE_DIR --OUTPUT_DIR $DEVHUB_OUTPUT_DIR 
       - name: Get Generated Yaml Files
