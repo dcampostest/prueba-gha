@@ -36,9 +36,11 @@ jobs:
       - name: Install Python Dependencies And Requirements
         run: |
           for i in ${{ github.event.pull_request.labels.*.name }}; do
-            echo "---------------------"
-            echo $i
-            echo "---------------------"
+            for a in $i; do
+              echo "---------------------"
+              echo $a
+              echo "---------------------"
+            done
           done
           
           cd dh-devhub-migrator
