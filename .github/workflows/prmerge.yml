@@ -35,7 +35,7 @@ jobs:
           python-version: "3.10"
       - name: Install Python Dependencies And Requirements
         run: |
-          echo ${{ github.event.label.name == 'devhub-ok' }}
+          echo ${{ github.event.pull_request.labels.*.name }}
           cd dh-devhub-migrator
           python -m pip install --upgrade pip
           pip install flake8 pytest
