@@ -18,6 +18,6 @@ spec:
     owner: group:deliveryhero/devex
     sources:
     - github/repo:github
-    tier: 4
+    tier: 3
     title: Test Service
     visibility: internal
