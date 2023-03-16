@@ -8,12 +8,12 @@ metadata:
     - url: https://github.com/deliveryhero/my-service
       title: GitHub
       icon: github 
-  description: My test service 4
+  description: My service 4
 spec:
   type: service
   owner: deliveryhero/devex
   lifecycle: beta
   dependsOn: []
   dh: 
-    tier: 1
+    tier: 4
     launchDate: May 2023 

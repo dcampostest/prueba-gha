@@ -1,4 +1,4 @@
-name: Devhub Migration Save
+name: Devhub Migration Push
 
 env:
   DEVHUB_BASE_URL: https://dev-hub-0008-api.dev.core-services.developer-platform.io
@@ -13,10 +13,10 @@ on:
 
 jobs:
   if_merged:
-    if: github.event.pull_request.merged == true  
-    name: DevHub Migration Save
+    if: github.event.pull_request.merged == true 
+    if: github.event.label.name == 'devhub-ok' 
+    name: DevHub Migration Push
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -56,6 +56,6 @@ jobs:
           echo "To generate the file output use arg -o ${i/devhub\//cli\/} on CLI (devhub_cli) command"
           for i in ${{ steps.lister.outputs.paths }}; do
             echo "---------------------> Start Processing File: $i"
-            python dh-devhub-migrator/cli/devhub_cli.py save -i $i -dr
+            python dh-devhub-migrator/cli/devhub_cli.py save -i $i -dr 
             echo "---------------------> End Processing File $i"
           done
