@@ -14,8 +14,7 @@ on:
 jobs:
   if_merged:
     if: |
-      github.event.pull_request.merged == true &&
-      github.event.label.name == 'devhub-ok'
+      github.event.pull_request.merged == true
     name: DevHub Migration Push
     runs-on: ubuntu-latest
     steps:
@@ -36,6 +35,7 @@ jobs:
           python-version: "3.10"
       - name: Install Python Dependencies And Requirements
         run: |
+          echo ${{ github.event.label.name == 'devhub-ok' }}
           cd dh-devhub-migrator
           python -m pip install --upgrade pip
           pip install flake8 pytest
