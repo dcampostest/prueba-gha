@@ -12,9 +12,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  if_merged:
-    if: github.event.pull_request.merged == true
-    translate:
+  translate:
+    if_merged:
+      if: github.event.pull_request.merged == true  
       name: DevHub Migration Save
       runs-on: ubuntu-latest
       
