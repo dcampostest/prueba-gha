@@ -12,49 +12,51 @@ on:
   workflow_dispatch:
 
 jobs:
-  translate:
-    name: DevHub Migration Save
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.head_ref }}
-      - name: Checkout Python Migration Scripts Repository
-        uses: actions/checkout@v3
-        with:
-          repository: deliveryhero/dh-devhub-migrator
-          path: dh-devhub-migrator
-          token: ${{ secrets.ACCESS_TOKEN }}
-          ref: main
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
-      - name: Install Python Dependencies And Requirements
-        run: |
-          cd dh-devhub-migrator
-          python -m pip install --upgrade pip
-          pip install flake8 pytest
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Lint Python Files with flake8
-        run: |
-          cd dh-devhub-migrator
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      - name: Get Generated Migration Files
-        id: lister
-        uses: Rishabh510/Path-lister-action@master
-        with:
-          path: "devhub"
-          type: ".yaml"
-      - name: Run Devhub CLI Save Command
-        run: |
-          echo "Found ${{ steps.lister.outputs.path_count }} file(s) with this extension:"
-          echo "To generate the file output use arg -o ${i/devhub\//cli\/} on CLI (devhub_cli) command"
-          for i in ${{ steps.lister.outputs.paths }}; do
-            echo "---------------------> Start Processing File: $i"
-            python dh-devhub-migrator/cli/devhub_cli.py save -i $i -dr
-            echo "---------------------> End Processing File $i"
-          done
+  if_merged:
+    if: github.event.pull_request.merged == true
+    translate:
+      name: DevHub Migration Save
+      runs-on: ubuntu-latest
+      
+      steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v3
+          with:
+            ref: ${{ github.head_ref }}
+        - name: Checkout Python Migration Scripts Repository
+          uses: actions/checkout@v3
+          with:
+            repository: deliveryhero/dh-devhub-migrator
+            path: dh-devhub-migrator
+            token: ${{ secrets.ACCESS_TOKEN }}
+            ref: main
+        - name: Setup Python
+          uses: actions/setup-python@v4
+          with:
+            python-version: "3.10"
+        - name: Install Python Dependencies And Requirements
+          run: |
+            cd dh-devhub-migrator
+            python -m pip install --upgrade pip
+            pip install flake8 pytest
+            if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        - name: Lint Python Files with flake8
+          run: |
+            cd dh-devhub-migrator
+            flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+            flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        - name: Get Generated Migration Files
+          id: lister
+          uses: Rishabh510/Path-lister-action@master
+          with:
+            path: "devhub"
+            type: ".yaml"
+        - name: Run Devhub CLI Save Command
+          run: |
+            echo "Found ${{ steps.lister.outputs.path_count }} file(s) with this extension:"
+            echo "To generate the file output use arg -o ${i/devhub\//cli\/} on CLI (devhub_cli) command"
+            for i in ${{ steps.lister.outputs.paths }}; do
+              echo "---------------------> Start Processing File: $i"
+              python dh-devhub-migrator/cli/devhub_cli.py save -i $i -dr
+              echo "---------------------> End Processing File $i"
+            done
