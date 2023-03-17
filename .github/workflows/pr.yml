@@ -61,7 +61,7 @@ jobs:
         id: lister
         uses: Rishabh510/Path-lister-action@master
         with:
-          path: env.DEVHUB_OUTPUT_DIR
+          path: devhub
           type: ".yaml"
       - name: Run Devhub CLI Save
         run: |
