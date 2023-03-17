@@ -11,5 +11,5 @@ spec:
     links: []
     owner: group:deliveryhero/devex
     tier: 1
-    title: Test Service Application
+    title: myservice3
     visibility: internal

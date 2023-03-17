@@ -15,5 +15,5 @@ spec:
   lifecycle: beta
   dependsOn: []
   dh: 
-    tier: 1
+    tier: 2
     launchDate: May 2023 
