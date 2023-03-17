@@ -75,14 +75,14 @@ jobs:
         id: changed-entities
         uses: tj-actions/changed-files@v35
         with:
-          files: ${{env.DEVHUB_OUTPUT_DIR}}/**/*.{yaml,yml}
+          files: devhub/**/*.{yaml,yml}
       - name: Validate Devhub CLI output
         id: validation
         run: |
           echo "IS_VALID=true" >> $GITHUB_OUTPUT
           for f in ${{ steps.changed-entities.outputs.all_changed_files }}; do
             echo "---------------------> Start Validation of File: $f"
-            if test -f ${$f/\.yaml/.error.json}; then
+            if test -f ${f/\.yaml/.error.json}; then
                 echo "IS_VALID=false" >> $GITHUB_OUTPUT
                 break
             fi
