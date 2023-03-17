@@ -10,6 +10,6 @@ spec:
         status: beta
     links: []
     owner: group:deliveryhero/devex
-    tier: 4
+    tier: 1
     title: myservice3
     visibility: internal
