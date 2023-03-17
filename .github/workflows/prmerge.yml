@@ -25,7 +25,7 @@ jobs:
       - name: return result
         run: echo "${{ steps.check_devhub-ok.outputs.result }}"  >> $GITHUB_ENV
   pushdevhub:
-    if: ${{ env.checklabel == 'true' }}
+    if: ${{ env.check_devhub-ok.outputs.result == 'true' }}
     name: DevHub Migration Push
     runs-on: ubuntu-latest
     steps:
