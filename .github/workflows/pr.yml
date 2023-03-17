@@ -66,8 +66,7 @@ jobs:
       - name: Run Devhub CLI Save
         run: |
           echo "Found ${{ steps.lister.outputs.path_count }} file(s) with this extension:"
-          paths=${${{steps.lister.outputs.paths}}//\&/\\&}
-          for i in $paths; do
+          for i in "${${{ steps.lister.outputs.path_count }}[@]}"; do
             echo "---------------------> Start Processing File: $i"
             python tools/cli/devhub_cli.py save -i $i -eo ${i/\.yaml/.error.json} -dr
           done
