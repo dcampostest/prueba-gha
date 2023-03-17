@@ -70,7 +70,7 @@ jobs:
           
           for i in ${{ steps.lister.outputs.paths }}; do
             filename=${i/\.yaml/.error.json}
-            filename=${filename//&/\&}
+            filename=${filename//&/\\&}
             echo "---------------------> Start Processing File: $filename"
             python tools/cli/devhub_cli.py save -i $i -eo $filename -dr
           done
