@@ -92,21 +92,21 @@ jobs:
         if: ${{ steps.validation.outputs.IS_VALID == 'false' }}
         with:
           labels: devhub-error
-      - name: Add Ok Label
-        uses: actions-ecosystem/action-add-labels@v1
-        if: ${{ steps.validation.outputs.IS_VALID == 'true' }}
-        with:
-          labels: devhub-ok
       - name: Remove Error Label
         uses: actions-ecosystem/action-remove-labels@v1
         if: ${{ steps.validation.outputs.IS_VALID == 'true' }}
         with:
           labels: devhub-error
+      - name: Add Ok Label
+        uses: actions-ecosystem/action-add-labels@v1
+        if: ${{ steps.validation.outputs.IS_VALID == 'true' }}
+        with:
+          labels: devhub-ok
       - name: Remove Ok Label
         uses: actions-ecosystem/action-remove-labels@v1
         if: ${{ steps.validation.outputs.IS_VALID == 'false' }}
         with:
-          labels: devhub-error
+          labels: devhub-ok
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
