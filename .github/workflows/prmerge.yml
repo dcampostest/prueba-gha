@@ -4,15 +4,16 @@ env:
   DEVHUB_BASE_URL: https://dev-hub-0008-api.dev.core-services.developer-platform.io
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    types: [closed]
+    branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
   if_merged:
+    if: ${{ (github.event.pull_request.merged == true) && (contains(github.event.pull_request.labels.*.name, 'devhub-ok')) }}
     name: DevHub Migration Push
     runs-on: ubuntu-latest
     steps:
@@ -33,6 +34,7 @@ jobs:
           python-version: "3.10"
       - name: Install Python Dependencies And Requirements
         run: |
+          echo ${{ github.event.label.name == 'devhub-ok' }}
           cd dh-devhub-migrator
           python -m pip install --upgrade pip
           pip install flake8 pytest
