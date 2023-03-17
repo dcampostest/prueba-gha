@@ -4,9 +4,9 @@ env:
   DEVHUB_BASE_URL: https://dev-hub-0008-api.dev.core-services.developer-platform.io
 
 on:
-  pull_request:
-    types: [closed]
-    branches: [ "main" ]
+  push:
+    branches:
+      - main
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -35,14 +35,6 @@ jobs:
           python-version: "3.10"
       - name: Install Python Dependencies And Requirements
         run: |
-          for i in ${{ github.event.pull_request.labels.*.name }}; do
-            for a in $i; do
-              echo "---------------------"
-              echo $a
-              echo "---------------------"
-            done
-          done
-          
           cd dh-devhub-migrator
           python -m pip install --upgrade pip
           pip install flake8 pytest
