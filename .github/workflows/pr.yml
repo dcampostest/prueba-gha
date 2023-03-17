@@ -61,7 +61,7 @@ jobs:
         id: lister
         uses: Rishabh510/Path-lister-action@master
         with:
-          path: env.DEVHUB_OUTPUT_DIR
+          path: devhub
           type: ".yaml"
       - name: Run Devhub CLI Save
         run: |
@@ -75,7 +75,7 @@ jobs:
         id: changed-entities
         uses: tj-actions/changed-files@v35
         with:
-          files: ${{env.DEVHUB_OUTPUT_DIR}}/**/*.{yaml,yml}
+          files: devhub/**/*.{yaml,yml}
       - name: Validate Devhub CLI output
         id: validation
         run: |
@@ -87,19 +87,24 @@ jobs:
                 break
             fi
           done
-      - name: Add Validation Labels
+      - name: Add Error Label
         uses: actions-ecosystem/action-add-labels@v1
         if: ${{ steps.validation.outputs.IS_VALID == 'false' }}
         with:
           labels: devhub-error
-      - name: Remove Validation Labels
+      - name: Remove Error Label
         uses: actions-ecosystem/action-remove-labels@v1
         if: ${{ steps.validation.outputs.IS_VALID == 'true' }}
         with:
           labels: devhub-error
-      - name: Add Devhub Changed Label
+      - name: Add Ok Label
         uses: actions-ecosystem/action-add-labels@v1
         if: ${{ steps.validation.outputs.IS_VALID == 'true' }}
+        with:
+          labels: devhub-ok
+      - name: Remove Ok Label
+        uses: actions-ecosystem/action-remove-labels@v1
+        if: ${{ steps.validation.outputs.IS_VALID == 'false' }}
         with:
           labels: devhub-ok
       - name: Commit changes
