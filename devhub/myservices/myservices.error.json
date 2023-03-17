@@ -1,0 +1,10 @@
+{
+    "errors": [
+        {
+            "file_name": "/myservices",
+            "messages": [
+                "Using default tier (4)"
+            ]
+        }
+    ]
+}
