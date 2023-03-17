@@ -59,10 +59,8 @@ jobs:
         run: python tools/extract_entities.py  --SOURCE_DIR $DEVHUB_MIGRATION_SOURCE_DIR --OUTPUT_DIR $DEVHUB_OUTPUT_DIR 
       - name: Get Generated Yaml Files
         id: lister
-        uses: Rishabh510/Path-lister-action@master
-        with:
-          path: devhub
-          type: ".yaml"
+        run: |
+          python3 tools/list_files.py --INPUT_PATH=devhub --INPUT_TYPE=.yaml
       - name: Run Devhub CLI Save
         run: |
           echo "Found ${{ steps.lister.outputs.path_count }} file(s) with this extension:"
