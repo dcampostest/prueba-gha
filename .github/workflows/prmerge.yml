@@ -12,8 +12,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  if_merged:
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'devhub-ok') }}
+  checklabel:
+    name: Check DevHub Ok
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check devhub-ok Label
+        id: check_devhub-ok
+        uses: shioyang/check-pr-labels-on-push-action@v1.0.9
+        with:
+          labels: '["devhub-ok"]'
+        timeout-minutes: 5
+      - name: return result
+        run: echo "${{ steps.check_devhub-ok.outputs.result }}"  >> $GITHUB_ENV
+  pushdevhub:
+    if: ${{ env.checklabel == 'true' }}
     name: DevHub Migration Push
     runs-on: ubuntu-latest
     steps:
