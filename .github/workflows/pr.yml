@@ -75,7 +75,7 @@ jobs:
         id: changed-entities
         uses: tj-actions/changed-files@v35
         with:
-          files: devhub/**/*.{yaml,yml,json}
+          files: devhub/**/*.{yaml,yml}
       - name: Validate Devhub CLI output
         id: validation
         run: |
