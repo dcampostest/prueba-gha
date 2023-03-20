@@ -11,6 +11,7 @@ metadata:
   description: My services3
 spec:
   type: service
+  owner: deliveryhero/devex
   lifecycle: beta
   dependsOn: []
   dh: 
