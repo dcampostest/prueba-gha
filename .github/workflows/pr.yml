@@ -59,18 +59,23 @@ jobs:
         run: python tools/extract_entities.py  --SOURCE_DIR $DEVHUB_MIGRATION_SOURCE_DIR --OUTPUT_DIR $DEVHUB_OUTPUT_DIR 
       - name: Get Generated Yaml Files
         id: lister
-        uses: Rishabh510/Path-lister-action@master
-        with:
-          path: devhub
-          type: ".yaml"
+        run: |
+          python3 tools/list_files.py --INPUT_PATH=devhub --INPUT_TYPE=.yaml
       - name: Run Devhub CLI Save
         run: |
           echo "Found ${{ steps.lister.outputs.path_count }} file(s) with this extension:"
-          echo "To generate the file output use arg -o ${i/devhub\//cli\/} on CLI (devhub_cli) command"
           for i in ${{ steps.lister.outputs.paths }}; do
             echo "---------------------> Start Processing File: $i"
             python tools/cli/devhub_cli.py save -i $i -eo ${i/\.yaml/.error.json} -dr
           done
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: Darian Campos
+          author_email: darian.campos@pedidosya.com
+          message: 'Migration success'
+          add: 'devhub/ --force'
+
       - name: Get Changed Yaml Files
         id: changed-entities
         uses: tj-actions/changed-files@v35
@@ -107,13 +112,6 @@ jobs:
         if: ${{ steps.validation.outputs.IS_VALID == 'false' }}
         with:
           labels: devhub-ok
-      - name: Commit changes
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: Darian Campos
-          author_email: darian.campos@pedidosya.com
-          message: 'Migration success'
-          add: 'devhub/ --force'
       - name: Fail Checks
         if: ${{ steps.validation.outputs.IS_VALID == 'false' }}
         run: exit 1
