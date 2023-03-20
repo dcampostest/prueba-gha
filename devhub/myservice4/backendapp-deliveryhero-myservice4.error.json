@@ -1,0 +1,13 @@
+{
+    "kind": "backendapp",
+    "namespace": "deliveryhero",
+    "name": "myservice4",
+    "errorCode": 400,
+    "error": {
+        "messages": [
+            "invalid spec for /entities/backendapp/deliveryhero/myservice4",
+            "tier: Must be less than or equal to 4"
+        ],
+        "code": "INVALID_PARAMETERS"
+    }
+}
