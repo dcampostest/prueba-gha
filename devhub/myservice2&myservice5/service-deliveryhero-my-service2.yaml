@@ -1,10 +1,10 @@
 kind: service
-name: my-service4
+name: my-service2
 namespace: deliveryhero
 spec:
-    application: backendapp:deliveryhero/myservice4
+    application: backendapp:deliveryhero/myservice2andmyservice5
     dependsOn: []
-    description: My services3
+    description: My test service
     docs: []
     lifecycle:
         launchDate: '2023-05-01T00:00:00Z'
@@ -12,12 +12,12 @@ spec:
     links:
     -   icon: github
         name: github
-        target: deliveryhero/my-service
+        target: deliveryhero/my-service2
         title: GitHub
         type: github/repo
     owner: group:deliveryhero/devex
     sources:
     - github/repo:github
-    tier: 3
-    title: Test Service
+    tier: 2
+    title: Test Service 2
     visibility: internal
