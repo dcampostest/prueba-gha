@@ -42,18 +42,22 @@ jobs:
           cd dh-devhub-migrator
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      - name: Get Generated Migration Files
-        id: lister
-        uses: Rishabh510/Path-lister-action@master
-        with:
-          path: "devhub"
-          type: ".yaml"
-      - name: Run Devhub CLI Save Command
+      - name: Get Generated Yaml Changed And Untracked Files
+        id: listerChanges
         run: |
-          echo "Found ${{ steps.lister.outputs.path_count }} file(s) with this extension:"
-          echo "To generate the file output use arg -o ${i/devhub\//cli\/} on CLI (devhub_cli) command"
-          for i in ${{ steps.lister.outputs.paths }}; do
-            echo "---------------------> Start Processing File: $i"
-            python dh-devhub-migrator/cli/devhub_cli.py save -i $i -dr 
-            echo "---------------------> End Processing File $i"
-          done
+          python3 dh-devhub-migrator/list_files.py --INPUT_PATH=devhub --INPUT_TYPE=.yaml --ONLY_CHANGED
+      - name: Get Generated Error Files
+        id: listerError
+        run: |
+          python3 tools/list_files.py --INPUT_PATH=devhub --INPUT_TYPE=.error.json
+      - name: Validate Devhub CLI output For Merge
+        run: |
+          echo "Found ${{ steps.listerChanges.outputs.path_count }} file(s) has changed:"
+          for i in ${{ steps.listerChanges.outputs.paths }}; do
+            echo "---------------------> Should push to Devhub, without dr option, File: $i"
+            echo "---------------------> ${i/\.yaml/.error.json}"
+            if [ ! ${i/\.yaml/.error.json} in ${{ steps.listerError.outputs.path }} ]; then
+              echo "---------------------> SIN ERROR"
+              python dh-devhub-migrator/cli/devhub_cli.py save -i $i -dr
+            fi
+          done 
