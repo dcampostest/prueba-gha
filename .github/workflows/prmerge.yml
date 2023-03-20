@@ -45,7 +45,7 @@ jobs:
       - name: Get Generated Yaml Changed And Untracked Files
         id: listerChanges
         run: |
-          python3 dh-devhub-migrator/list_files.py --INPUT_PATH=devhub --INPUT_TYPE=.yaml --ONLY_CHANGED
+          python3 tools/list_files.py --INPUT_PATH=devhub --INPUT_TYPE=.yaml --ONLY_CHANGED
       - name: Get Generated Error Files
         id: listerError
         run: |
