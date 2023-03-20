@@ -84,7 +84,7 @@ jobs:
         id: validation
         run: |
           echo "IS_VALID=true" >> $GITHUB_OUTPUT
-          if steps.listerError.outputs.path_count > 0 then
+          if [[ ${{ steps.listerError.outputs.path_count }} -ge 0]] then
             echo "IS_VALID=false" >> $GITHUB_OUTPUT
           fi
       - name: Add Error Label
