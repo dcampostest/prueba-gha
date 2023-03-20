@@ -19,6 +19,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
+          path: main
           ref: ${{ github.head_ref }}
       - name: Checkout Python Migration Scripts Repository
         uses: actions/checkout@v3
@@ -45,21 +46,23 @@ jobs:
       - name: Get Generated Yaml Changed And Untracked Files
         id: listerChanges
         run: |
-          git config --global --add safe.directory "*"
-          python3 tools/list_files.py --INPUT_PATH=devhub --INPUT_TYPE=.yaml --ONLY_CHANGED --GIT_BASE=HEAD~1
+          cd main
+          python3 ../tools/list_files.py --INPUT_PATH=devhub --INPUT_TYPE=.yaml --ONLY_CHANGED --GIT_BASE=HEAD~1
       - name: Get Generated Error Files
         id: listerError
         run: |
-          python3 tools/list_files.py --INPUT_PATH=devhub --INPUT_TYPE=.error.json
+          cd main
+          python3 ../tools/list_files.py --INPUT_PATH=devhub --INPUT_TYPE=.error.json
       - name: Validate Devhub CLI output For Merge
         run: |
+          cd main
           echo "Found ${{ steps.listerChanges.outputs.path_count }} file(s) has changed:"
           for i in ${{ steps.listerChanges.outputs.paths }}; do
             echo "---------------------> Should push to Devhub, without dr option, File: $i"
             echo "---------------------> ${i/\.yaml/.error.json}"
             if [ ! ${i/\.yaml/.error.json} in ${{ steps.listerError.outputs.path }} ]; then
               echo "---------------------> SIN ERROR"
-              python dh-devhub-migrator/cli/devhub_cli.py save -i $i -dr
+              python ../tools/cli/devhub_cli.py save -i $i -dr
             else
               echo "---------------------> $i not push by error"
             fi
