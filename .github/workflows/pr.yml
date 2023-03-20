@@ -83,12 +83,8 @@ jobs:
       - name: Validate Devhub CLI output
         id: validation
         run: |
-          echo "-------------"
-          echo "${{ steps.listerError.outputs.path_count }}"
-          echo "-------------"
-          echo "IS_VALID=true" >> $GITHUB_OUTPUT
-          if [[ ${{ steps.listerError.outputs.path_count }} -ge 0 ]]; then
-            echo "IS_VALID=false" >> $GITHUB_OUTPUT
+          if [[ ${{ steps.listerError.outputs.path_count }} -eq 0 ]]; then
+            echo "IS_VALID=true" >> $GITHUB_OUTPUT
           fi
       - name: Add Error Label
         uses: actions-ecosystem/action-add-labels@v1
