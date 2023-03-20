@@ -97,7 +97,7 @@ jobs:
         if: ${{ steps.validation.outputs.IS_VALID == 'true' }}
         with:
           labels: devhub-error
-      - name: Add Ok Label
+      - name: Add OK Label
         uses: actions-ecosystem/action-add-labels@v1
         if: ${{ steps.validation.outputs.IS_VALID == 'true' }}
         with:

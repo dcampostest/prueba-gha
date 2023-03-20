@@ -10,7 +10,7 @@ metadata:
       icon: github 
   description: My test service 3
 spec:
-  type: service
+  type: cron
   owner: deliveryhero/devex
   lifecycle: beta
   dependsOn: []
