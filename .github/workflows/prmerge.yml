@@ -45,6 +45,7 @@ jobs:
       - name: Get Generated Yaml Changed And Untracked Files
         id: listerChanges
         run: |
+          git config --global --add safe.directory .
           python3 tools/list_files.py --INPUT_PATH=devhub --INPUT_TYPE=.yaml --ONLY_CHANGED --GIT_BASE=HEAD~1
       - name: Get Generated Error Files
         id: listerError
