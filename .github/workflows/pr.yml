@@ -83,6 +83,7 @@ jobs:
       - name: Validate Devhub CLI output
         id: validation
         run: |
+          echo "-------------"
           echo "${{ steps.listerError.outputs.path_count }}"
           echo "IS_VALID=true" >> $GITHUB_OUTPUT
           if [[ ${{ steps.listerError.outputs.path_count }} -ge 0 ]]; then
