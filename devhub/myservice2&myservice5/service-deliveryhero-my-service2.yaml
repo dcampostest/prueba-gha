@@ -2,7 +2,7 @@ kind: service
 name: my-service2
 namespace: deliveryhero
 spec:
-    application: backendapp:deliveryhero/myservice2
+    application: backendapp:deliveryhero/myservice2andmyservice5
     dependsOn: []
     description: My test service
     docs: []
@@ -18,6 +18,6 @@ spec:
     owner: group:deliveryhero/devex
     sources:
     - github/repo:github
-    tier: 1
+    tier: 2
     title: Test Service 2
     visibility: internal

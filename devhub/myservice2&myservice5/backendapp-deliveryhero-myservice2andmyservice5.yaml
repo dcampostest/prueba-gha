@@ -1,5 +1,5 @@
 kind: backendapp
-name: myservice2
+name: myservice2andmyservice5
 namespace: deliveryhero
 spec:
     cd: []
@@ -10,6 +10,6 @@ spec:
         status: beta
     links: []
     owner: group:deliveryhero/devex
-    tier: 1
+    tier: 2
     title: Test Service 2 Application
     visibility: internal
