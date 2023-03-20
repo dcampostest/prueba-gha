@@ -2,7 +2,7 @@ kind: service
 name: my-service2
 namespace: deliveryhero
 spec:
-    application: backendapp:deliveryhero/myservice2
+    application: backendapp:deliveryhero/myservice2andmyservice5
     dependsOn: []
     description: My test service
     docs: []

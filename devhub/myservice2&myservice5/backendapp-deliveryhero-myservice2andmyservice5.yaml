@@ -1,5 +1,5 @@
 kind: backendapp
-name: myservice2
+name: myservice2andmyservice5
 namespace: deliveryhero
 spec:
     cd: []
