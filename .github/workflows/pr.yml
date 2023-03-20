@@ -86,6 +86,7 @@ jobs:
           echo "IS_VALID=true" >> $GITHUB_OUTPUT
           if steps.listerError.outputs.path_count > 0 then
             echo "IS_VALID=false" >> $GITHUB_OUTPUT
+          fi
       - name: Add Error Label
         uses: actions-ecosystem/action-add-labels@v1
         if: ${{ steps.validation.outputs.IS_VALID == 'false' }}
