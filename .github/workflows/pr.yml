@@ -75,11 +75,21 @@ jobs:
           author_email: darian.campos@pedidosya.com
           message: 'Migration success'
           add: 'devhub/ --force'
-
+      - name: Get Generated Yaml Changed And Untracked Files
+        id: listerChanges
+        run: |
+          python3 tools/list_files.py --INPUT_PATH=devhub --INPUT_TYPE=.yaml --ONLY_CHANGED
       - name: Get Generated Error Files
         id: listerError
         run: |
           python3 tools/list_files.py --INPUT_PATH=devhub --INPUT_TYPE=.error.json
+      - name: Validate Devhub CLI output For Merge
+        run: |
+          echo "Found ${{ steps.listerChanges.outputs.path_count }} file(s) has changed:"
+          for i in ${{ steps.listerChanges.outputs.paths }}; do
+            echo "---------------------> Should push to Devhub, without dr option, File: $i"
+            # python dh-devhub-migrator/cli/devhub_cli.py save -i $i -dr
+          done 
       - name: Validate Devhub CLI output
         id: validation
         run: |
