@@ -59,5 +59,7 @@ jobs:
             if [ ! ${i/\.yaml/.error.json} in ${{ steps.listerError.outputs.path }} ]; then
               echo "---------------------> SIN ERROR"
               python dh-devhub-migrator/cli/devhub_cli.py save -i $i -dr
+            else
+              echo "---------------------> $i not push by error"
             fi
           done 
