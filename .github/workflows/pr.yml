@@ -76,22 +76,16 @@ jobs:
           message: 'Migration success'
           add: 'devhub/ --force'
 
-      - name: Get Changed Yaml Files
-        id: changed-entities
-        uses: tj-actions/changed-files@v35
-        with:
-          files: devhub/**/*.{yaml,yml}
+      - name: Get Generated Error Files
+        id: listerError
+        run: |
+          python3 tools/list_files.py --INPUT_PATH=devhub --INPUT_TYPE=.error.json
       - name: Validate Devhub CLI output
         id: validation
         run: |
           echo "IS_VALID=true" >> $GITHUB_OUTPUT
-          for f in ${{ steps.changed-entities.outputs.all_changed_files }}; do
-            echo "---------------------> Start Validation of File: $f"
-            if test -f ${f/\.yaml/.error.json}; then
-                echo "IS_VALID=false" >> $GITHUB_OUTPUT
-                break
-            fi
-          done
+          if steps.listerError.outputs.path_count > 0 then
+            echo "IS_VALID=false" >> $GITHUB_OUTPUT
       - name: Add Error Label
         uses: actions-ecosystem/action-add-labels@v1
         if: ${{ steps.validation.outputs.IS_VALID == 'false' }}
