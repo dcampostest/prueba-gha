@@ -68,13 +68,6 @@ jobs:
             echo "---------------------> Start Processing File: $i"
             python tools/cli/devhub_cli.py save -i $i -eo ${i/\.yaml/.error.json} -dr
           done
-      - name: Commit changes
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: Darian Campos
-          author_email: darian.campos@pedidosya.com
-          message: 'Migration success'
-          add: 'devhub/ --force'
       - name: Get Generated Yaml Changed And Untracked Files
         id: listerChanges
         run: |
@@ -116,6 +109,13 @@ jobs:
         if: ${{ steps.validation.outputs.IS_VALID == 'false' }}
         with:
           labels: devhub-ok
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: Darian Campos
+          author_email: darian.campos@pedidosya.com
+          message: 'Migration success'
+          add: 'devhub/ --force'
       - name: Fail Checks
         if: ${{ steps.validation.outputs.IS_VALID == 'false' }}
         run: exit 1
