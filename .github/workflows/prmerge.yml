@@ -48,13 +48,18 @@ jobs:
         run: |
           cd main
           python3 ../tools/list_files.py --INPUT_PATH=devhub --INPUT_TYPE=.yaml
+      - name: Get Generated Error Files
+        id: listerError
+        run: |
+          cd main
+          python3 ../tools/list_files.py --INPUT_PATH=devhub --INPUT_TYPE=.error.json
       - name: Validate Devhub CLI output For Merge
         run: |
           cd main
           for i in ${{ steps.listerFiles.outputs.paths }}; do
             echo "---------------------> Should push to Devhub, without dr option, File: $i"
             echo "---------------------> ${i/\.yaml/.error.json}"
-            if [ ! ${i/\.yaml/.error.json} in ${{ steps.listerFiles.outputs.path }} ]; then
+            if [ ! ${i/\.yaml/.error.json} in ${{ steps.listerError.outputs.path }} ]; then
               echo "---------------------> SIN ERROR"
               python ../tools/cli/devhub_cli.py save -i $i -dr
             else
