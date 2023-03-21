@@ -4,16 +4,15 @@ env:
   DEVHUB_BASE_URL: https://dev-hub-0008-api.dev.core-services.developer-platform.io
 
 on:
-  pull_request:
-    types: [closed]
-    branches: [ "main" ]
+  push:
+    branches:
+      - main
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
   if_merged:
-    if: github.event.pull_request.merged == true
     name: DevHub Migration Push
     runs-on: ubuntu-latest
     steps:
@@ -44,11 +43,12 @@ jobs:
           cd tools
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      - name: Get Generated Yaml Changed And Untracked Files
-        id: listerChanges
+      - name: Get files changed
         run: |
-          cd main
-          python3 ../tools/list_files.py --INPUT_PATH=devhub --INPUT_TYPE=.yaml --ONLY_CHANGED --GIT_BASE=HEAD~1
+          echo "---------------------------"
+          echo git log --format=%H -n 3 | tail -n 1 | read firstcommit
+          echo "$firstcommit"
+          echo git diff-tree --no-commit-id --name-only -r $firstcommit..main 
       - name: Get Generated Error Files
         id: listerError
         run: |
