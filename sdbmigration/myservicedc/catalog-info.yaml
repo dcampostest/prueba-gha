@@ -1,19 +1,19 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata: 
-  name: my-service
+  name: my-servicedc
   namespace: deliveryhero
   title: Test Service
   links: 
     - url: https://github.com/deliveryhero/my-service
       title: GitHub
       icon: github 
-  description: My test service
+  description: My service DC
 spec:
   type: service
   owner: deliveryhero/devex
   lifecycle: beta
   dependsOn: []
   dh: 
-    tier: 1
+    tier: 2
     launchDate: May 2023 
