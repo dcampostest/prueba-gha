@@ -1,11 +1,11 @@
 {
     "kind": "service",
     "namespace": "deliveryhero",
-    "name": "my-service4",
+    "name": "my-service3",
     "errorCode": 400,
     "error": {
         "messages": [
-            "invalid spec for /entities/service/deliveryhero/my-service4",
+            "invalid spec for /entities/service/deliveryhero/my-service3",
             "tier: Must be less than or equal to 4"
         ],
         "code": "INVALID_PARAMETERS"
