@@ -60,7 +60,7 @@ jobs:
             echo "---------------------> Should push to Devhub, without dr option, File: $i"
             echo "---------------------> ${i/\.yaml/.error.json}"
             echo "${i/\.yaml/.error.json}"
-            if [[ ! (${i/\.yaml/.error.json} in ${{ steps.listerError.outputs.path }}) ]]; then
+            if [[ ! (${i/\.yaml/.error.json} in ${{ steps.listerError.outputs.paths }}) ]]; then
               echo "---------------------> SIN ERROR"
               python ../tools/cli/devhub_cli.py save -i $i -dr
             else
