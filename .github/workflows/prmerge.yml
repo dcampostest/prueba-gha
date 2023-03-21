@@ -46,9 +46,7 @@ jobs:
       - name: Get files changed
         run: |
           echo "---------------------------"
-          echo git log --format=%H -n 3 | tail -n 1 | read firstcommit
-          echo "$firstcommit"
-          echo git diff-tree --no-commit-id --name-only -r $firstcommit..main 
+          git log --format=%H -n 3 | tail -n 1
       - name: Get Generated Error Files
         id: listerError
         run: |
