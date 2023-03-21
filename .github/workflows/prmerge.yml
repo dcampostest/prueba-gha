@@ -4,15 +4,16 @@ env:
   DEVHUB_BASE_URL: https://dev-hub-0008-api.dev.core-services.developer-platform.io
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    types: [closed]
+    branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
-  pushdevhub:
+  if_merged:
+    if: github.event.pull_request.merged == true
     name: DevHub Migration Push
     runs-on: ubuntu-latest
     steps:
