@@ -51,7 +51,7 @@ jobs:
           for i in ${{ steps.listerFiles.outputs.paths }}; do
             echo "---------------------> Should push to Devhub, without dr option, File: $i"
             echo "---------------------> ${i/\.yaml/.error.json}"
-            if test -f ${f/\.yaml/.error.json}; then
+            if test -f ${i/\.yaml/.error.json}; then
               echo "---------------------> $i not push by error"
             else
               echo "---------------------> SIN ERROR"
