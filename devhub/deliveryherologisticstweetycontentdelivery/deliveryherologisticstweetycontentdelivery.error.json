@@ -1,0 +1,10 @@
+{
+    "errors": [
+        {
+            "file_name": "/deliveryherologisticstweetycontentdelivery",
+            "messages": [
+                "Exception Ocurred: string indices must be integers"
+            ]
+        }
+    ]
+}
