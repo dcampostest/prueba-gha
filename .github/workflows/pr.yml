@@ -39,7 +39,7 @@ jobs:
           repository: deliveryhero/dh-devhub-migrator
           path: tools
           token: ${{ secrets.ACCESS_TOKEN }}
-          ref: main
+          ref: noErrorWhenDolarSimbolIsNotPresent
       - name: Setup Python
         uses: actions/setup-python@v4
         with:

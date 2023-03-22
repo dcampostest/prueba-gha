@@ -1,0 +1,25 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata: 
+  name: logistics-tweety-content-delivery
+  namespace: deliveryhero
+  title: Tweety Content Delivery Service
+  links: 
+    - url: https://github.com/deliveryhero/logistics-tweety-content-delivery
+      title: GitHub
+      icon: github 
+  tags: 
+    - languagebe-kotlin
+    - logistics
+  description: logistics-tweety-content-delivery service
+spec:
+  type: service
+  owner: deliveryhero/logistics-rider-engagement
+  lifecycle: production
+  system: deliveryhero
+  providesApis:
+    - logistics-tweety-content-delivery
+  dependsOn: []
+  dh: 
+    tier: 3 
+    launchDate: November 2022 
