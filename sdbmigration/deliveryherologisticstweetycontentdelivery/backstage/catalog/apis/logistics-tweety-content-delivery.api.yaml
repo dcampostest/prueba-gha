@@ -1,0 +1,21 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: logistics-tweety-content-delivery
+  namespace: deliveryhero
+  links: 
+    - url: https://apidocs.usehurrier.com/logistics-tweety-content-delivery.html
+      title: Documentation
+      icon: docs
+  description: logistics-tweety-content-delivery API
+spec:
+  type: openapi
+  lifecycle: production
+  owner: deliveryhero/logistics-rider-engagement
+  system: deliveryhero
+  definition: |
+    openapi: 3.0.0
+    info:
+      version: 1.0.0
+      title: Sample API
+    paths: {}

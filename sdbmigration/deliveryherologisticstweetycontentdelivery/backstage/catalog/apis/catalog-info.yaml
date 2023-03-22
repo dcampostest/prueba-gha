@@ -1,0 +1,7 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: logistics-tweety-content-delivery-apis
+  description: A collection of all logistics-tweety-content-delivery apis
+spec:
+  target: ./*.api.yaml
