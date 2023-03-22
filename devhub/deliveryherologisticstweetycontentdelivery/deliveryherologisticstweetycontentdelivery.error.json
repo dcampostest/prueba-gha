@@ -1,0 +1,10 @@
+{
+    "errors": [
+        {
+            "file_name": "/deliveryherologisticstweetycontentdelivery/backstage/catalog/apis/logistics-tweety-content-delivery.api.yaml",
+            "messages": [
+                "Not a well know value of 'definition' on spec"
+            ]
+        }
+    ]
+}

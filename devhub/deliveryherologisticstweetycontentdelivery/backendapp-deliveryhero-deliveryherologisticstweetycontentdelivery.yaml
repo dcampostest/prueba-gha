@@ -1,0 +1,15 @@
+kind: backendapp
+name: deliveryherologisticstweetycontentdelivery
+namespace: deliveryhero
+spec:
+    cd: []
+    description: ''
+    docs: []
+    lifecycle:
+        launchDate: '2022-11-01T00:00:00Z'
+        status: launched
+    links: []
+    owner: group:deliveryhero/logistics-rider-engagement
+    tier: 3
+    title: Tweety Content Delivery Service Application
+    visibility: internal
